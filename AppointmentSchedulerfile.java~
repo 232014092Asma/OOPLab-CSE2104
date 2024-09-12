@@ -1,0 +1,110 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class AppointmentSchedulerfile {
+
+    private static ArrayList<Patient> patients = new ArrayList<Patient>();
+    private static ArrayList<Doctor> doctors = new ArrayList<Doctor>();
+
+    public static void main(String[] args) {
+        Scanner inputScanner = new Scanner(System.in);
+
+        System.out.print("Enter the number of appointments to book: ");
+        int numAppointments = inputScanner.nextInt();
+        inputScanner.nextLine();  
+
+        for (int i = 0; i < numAppointments; i++) {
+            System.out.println("Enter patient's ID for the appointment:");
+            String patientId = inputScanner.nextLine();
+            Patient patient = findPatientById(patientId);
+
+            if (patient == null) {
+                System.out.println("Patient not found.");
+                continue;
+            }
+
+            System.out.println("Enter doctor's name for the appointment:");
+            String doctorName = inputScanner.nextLine();
+            Doctor doctor = findDoctorByName(doctorName);
+
+            if (doctor == null) {
+                System.out.println("Doctor not found.");
+                continue;
+            }
+
+            System.out.println("Enter appointment date (YYYY-MM-DD):");
+            String date = inputScanner.nextLine();
+
+            Appointment appointment = new Appointment(doctor, patient, date);
+            appointment.saveToFile();
+            System.out.println("Appointment booked successfully.");
+        }
+
+        inputScanner.close();
+    }
+
+    private static Patient findPatientById(String id) {
+        for (Patient patient : patients) {
+            if (patient.getId().equals(id)) {
+                return patient;
+            }
+        }
+        return null;
+    }
+
+    private static Doctor findDoctorByName(String name) {
+        for (Doctor doctor : doctors) {
+            if (doctor.getName().equals(name)) {
+                return doctor;
+            }
+        }
+        return null;
+    }
+}
+
+class Patient {
+    private String id;
+    private String name;
+
+    public Patient(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+
+class Doctor {
+    private String name;
+
+    public Doctor(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+
+class Appointment {
+    private Doctor doctor;
+    private Patient patient;
+    private String date;
+
+    public Appointment(Doctor doctor, Patient patient, String date) {
+        this.doctor = doctor;
+        this.patient = patient;
+        this.date = date;
+    }
+
+    public void saveToFile() {
+        
+        System.out.println("Saving appointment to file: " + doctor.getName() + " with " + patient.getName() + " on " + date);
+    }
+}

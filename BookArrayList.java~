@@ -1,0 +1,84 @@
+import java.util.ArrayList;
+
+
+class Book {
+    private String title;
+    private String author;
+    private int year;
+    private String genre;
+
+   
+    public Book(String title, String author, int year, String genre) {
+        this.title = title;
+        this.author = author;
+        this.year = year;
+        this.genre = genre;
+    }
+
+    
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+   
+    public String toString() {
+        return "Book{" +
+                "title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", year=" + year +
+                ", genre='" + genre + '\'' +
+                '}';
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+       
+        ArrayList<Book> library = new ArrayList<>();
+
+        
+        library.add(new Book("The Great Gatsby", "F. Scott Fitzgerald", 1925, "Fiction"));
+        library.add(new Book("To Kill a Mockingbird", "Harper Lee", 1960, "Fiction"));
+        library.add(new Book("1984", "George Orwell", 1949, "Dystopian Fiction"));
+
+       
+        System.out.println("Books in the library:");
+        for (Book book : library) {
+            System.out.println(book);
+        }
+
+        
+        removeBookByTitle(library, "To Kill a Mockingbird");
+
+       
+        System.out.println("\nBooks after removal:");
+        for (Book book : library) {
+            System.out.println(book);
+        }
+    }
+
+    
+    public static void removeBookByTitle(ArrayList<Book> library, String title) {
+        
+        for (int i = 0; i < library.size(); i++) {
+            if (library.get(i).getTitle().equals(title)) {
+                library.remove(i);
+                System.out.println("Removed: " + title);
+                break;  
+            }
+        }
+    }
+}
